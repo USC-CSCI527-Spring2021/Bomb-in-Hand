@@ -2,30 +2,22 @@
 """
 Created on Tue Mar  2 11:19:56 2021
 
-@author: andre
+@author: yijingxiao
 """
 
 import cv2
 import mediapipe as mp
 from pyServer import PyServer
 
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Mar  2 11:36:37 2021
-
-@author: andre
-"""
-
-
-# https://gist.github.com/TheJLifeX/74958cc59db477a91837244ff598ef4a
+# reference: https://gist.github.com/TheJLifeX/74958cc59db477a91837244ff598ef4a
 
 ### Functions
 def recognizeHandGesture(landmarks):
-  thumbState = 'UNKNOW'
-  indexFingerState = 'UNKNOW'
-  middleFingerState = 'UNKNOW'
-  ringFingerState = 'UNKNOW'
-  littleFingerState = 'UNKNOW'
+  thumbState = 'UNKNOWN'
+  indexFingerState = 'UNKNOWN'
+  middleFingerState = 'UNKNOWN'
+  ringFingerState = 'UNKNOWN'
+  littleFingerState = 'UNKNOWN'
   recognizedHandGesture = None
 
   pseudoFixKeyPoint = landmarks[2]['x']
@@ -69,7 +61,7 @@ def recognizeHandGesture(landmarks):
   elif (thumbState == 'CLOSE' and indexFingerState == 'CLOSE' and middleFingerState == 'CLOSE' and ringFingerState == 'CLOSE' and littleFingerState == 'CLOSE'):
     recognizedHandGesture = 10 # "FIST"
   else:
-    recognizedHandGesture = 0 # "UNKNOW"
+    recognizedHandGesture = 0 # "UNKNOWN"
   return recognizedHandGesture
 
 def getStructuredLandmarks(landmarks):
@@ -122,7 +114,10 @@ if __name__ == '__main__':
           landmark_data.append(x)
           landmark_data.append(y)
         recognizedHandGesture = recognizeHandGesture(getStructuredLandmarks(landmark_data))
-        print("recognized hand gesture: ", recognizedHandGesture)  # print: "recognized hand gesture: 5"
+        if recognizedHandGesture==0:
+            print("recognized hand gesture: ", recognizedHandGesture)
+        else:
+            print("recognized hand gesture: ", 1)
     else:
       recognizedHandGesture = -1
     if recognizedHandGesture == -1:
